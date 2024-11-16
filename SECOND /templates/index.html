@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Friend Groups!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f0f9ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: rainbow 5s infinite;
+        }
+
+        @keyframes rainbow {
+            0% { color: #FF9AA2; }
+            25% { color: #FFB347; }
+            50% { color: #98FB98; }
+            75% { color: #87CEEB; }
+            100% { color: #FF9AA2; }
+        }
+
+        .group-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .group-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .group-title {
+            background: #FFB347;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .members-list {
+            background: #E6F3FF;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .interests-list {
+            background: #FFF0F5;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .questions-list {
+            background: #F0FFF0;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .gemini-response {
+            background: #FFE4E1;
+            padding: 10px;
+            border-radius: 10px;
+            font-style: italic;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "🌟";
+            position: absolute;
+            left: 0;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>✨ Your Fun Friend Groups! ✨</h1>
+        <p>Let's make new friends and have amazing conversations!</p>
+    </div>
+
+    <div class="group-container">
+        {% for group in groups %}
+        <div class="group-card">
+            <div class="group-title bounce">
+                <h2>Friend Group {{ loop.index }}</h2>
+            </div>
+
+            <div class="members-list">
+                <h3>👥 Your New Friends:</h3>
+                <ul>
+                    {% for member in group.members %}
+                    <li>{{ member }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="interests-list">
+                <h3>🎨 What You All Love:</h3>
+                <ul>
+                    {% for interest, value in group.interests.items() %}
+                    <li>{{ interest }}: {{ value }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="questions-list">
+                <h3>❓ Fun Questions to Ask:</h3>
+                <ul>
+                    {% for question in group.questions %}
+                    <li>{{ question }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="gemini-response">
+                <h3>🤖 Special Message:</h3>
+                <p>{{ group.gemini_response }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
