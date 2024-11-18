@@ -5,7 +5,7 @@ import google.generativeai as genai
 class KidsInteractiveChatbot:
     def __init__(self):
         # Initialize Google API
-        self.GOOGLE_API_KEY = 'AIzaSyD05eimquf6wnVXDiQwfr6_MHogTGVbLdo'  # Replace with your actual API key
+        self.GOOGLE_API_KEY = ''  # Replace with your actual API key
         
         # Initialize Gemini
         genai.configure(api_key=self.GOOGLE_API_KEY)
