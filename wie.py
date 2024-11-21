@@ -56,7 +56,7 @@ class KidsInteractiveChatbot:
         
         **You must only ask these questions in the specified order, one at a time. Do not ask for any additional information.**
         
-        Always acknowledge the student's answer positively before asking the next question.
+        Always acknowledge the student's answer positively before asking the next question. Try connecting the student's answer to the next question.
         Start by greeting the student and ask for their Student ID first. Wait for their answer before asking the next question.
         """
 
@@ -170,6 +170,65 @@ class KidsInteractiveChatbot:
         self.save_to_csv(extracted_info)
         
         print("Session completed!")
+
+
+    def generate_response(self, student_input):
+        """
+        Generate a response while maintaining the structured conversation flow
+        """
+        try:
+            # Add student input to conversation history
+            self.conversation_history.append(student_input)
+            
+            # Create prompt based on conversation state
+            if self.current_question_index >= len(self.question_list):
+                # If we've asked all questions, save to CSV and end
+                extracted_info = self.extract_information()
+                self.save_to_csv(extracted_info)
+                return "Thank you for sharing! I've saved all your information. Have a great day!"
+            
+            # Create prompt for next response
+            conversation_prompt = f"""
+            You are currently chatting with a student. Here is the conversation so far:
+            {self._format_conversation_history()}
+            
+            Acknowledge the student's last answer positively and then ask the next question:
+            "{self.question_list[self.current_question_index]}"
+            
+            Keep your response very brief and friendly.
+            """
+            
+            # Get response from Gemini
+            response = self.gmodel.generate_content(conversation_prompt)
+            bot_response = response.text.strip()
+            
+            # Add bot response to history
+            self.conversation_history.append(bot_response)
+            
+            # Move to next question
+            self.current_question_index += 1
+            
+            return bot_response
+            
+        except Exception as e:
+            print(f"Error generating response: {e}")
+            return "I'm sorry, I couldn't understand that. Could you try answering again?"
+    def get_initial_greeting(self):
+        """Get the initial greeting and first question"""
+        initial_prompt = f"""
+        You are speaking with a young student (grades 1-2).
+        Greet them warmly and ask for their Student ID.
+        Keep it very brief and friendly.
+        """
+        
+        try:
+            response = self.gmodel.generate_content(initial_prompt)
+            greeting = response.text.strip()
+            self.conversation_history.append(greeting)
+            return greeting
+        except Exception as e:
+            print(f"Error generating greeting: {e}")
+            return "Hi! Can you tell me your Student ID?"
 
 if __name__ == "__main__":
     chatbot = KidsInteractiveChatbot()
