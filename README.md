@@ -11,7 +11,7 @@
 
 <img width="1383" alt="Friendzy Banner" src="https://github.com/user-attachments/assets/7c03182f-3fc4-424f-a304-403cc22ae0a7">
 
-### 🌟 1st Place Winner - Women in Engineering Hackathon 2024
+### 🌟 1st Place Winner - Women in Engineering Hackathon University of Waterloo 2024
 ### 🎯 Category: Inclusivity in Schools
 
 </div>
@@ -95,11 +95,7 @@ python app.py
 
 ## 👥 Contributors
 
-A project by the 2024 Women in Engineering Hackathon winning team.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Tejasvini Chawla (Backend), Emma lassaline (UI), Keira Jullienne (Presentation and Pitch), Carolyn Yao (UI)
 
 ---
 
