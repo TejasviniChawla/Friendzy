@@ -1,16 +1,19 @@
 import csv
 import os
 import google.generativeai as genai
+load_dotenv()
 
 class KidsInteractiveChatbot:
     def __init__(self):
-        # Initialize Google API
-        self.GOOGLE_API_KEY = ''  # Replace with your actual API key
+        self.GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')  # Get API key from environment variable
         
+        if not self.GOOGLE_API_KEY:
+            raise ValueError("GOOGLE_API_KEY not found in environment variables")
+            
         # Initialize Gemini
         genai.configure(api_key=self.GOOGLE_API_KEY)
         self.gmodel = genai.GenerativeModel('gemini-1.5-flash')
-        
+    
         # CSV configuration
         self.csv_file = "student_responses.csv"
         self.required_fields = [
